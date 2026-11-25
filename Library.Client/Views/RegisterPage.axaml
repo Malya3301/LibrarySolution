@@ -1,0 +1,34 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="clr-namespace:Library.Client.ViewModels"
+             x:DataType="vm:RegisterViewModel"  
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="Library.Client.Views.RegisterPage">
+             
+    <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Vertical" Spacing="8">
+        <Label Classes="h1" Content="Регистрация" HorizontalAlignment="Center" />
+        <Label Classes="h2" Content="Создайте учетную запись" HorizontalAlignment="Center" />
+        
+        <TextBox Classes="Main" Watermark="Логин" Text="{Binding Login}" />
+        <TextBox Classes="Main" Watermark="Почта" Text="{Binding Email}" />
+        <TextBox Classes="Main" Watermark="Пароль" PasswordChar="*" Text="{Binding Password}" />
+
+        <!-- Блок для вывода ошибки от сервера -->
+        <TextBlock Text="{Binding ErrorMessage}" 
+                   Foreground="Red" 
+                   HorizontalAlignment="Center"
+                   IsVisible="{Binding ErrorMessage, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" />
+        
+        <!-- 1. Исправлено: RegisterCommand вместо RegisterAsync -->
+        <Button Width="300" HorizontalAlignment="Center" Classes="Main" Content="Регистрация" 
+                Background="{StaticResource RedColor}" 
+                Command="{Binding RegisterCommand}" />
+                
+        <!-- 2. Заменили Click из code-behind на чистую MVVM-команду -->
+        <Button Width="300" HorizontalAlignment="Center" Classes="Main" Content="Войти" 
+                Background="{StaticResource BlueColor}" 
+                Command="{Binding GoToLoginCommand}" />
+    </StackPanel>
+</UserControl>

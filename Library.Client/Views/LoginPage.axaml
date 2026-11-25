@@ -1,0 +1,20 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="clr-namespace:Library.Client.ViewModels"
+             x:DataType="vm:LoginPageViewModel"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="Library.Client.Views.LoginPage">
+    <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Vertical">
+        <Label Classes="h1" Content="Вход" HorizontalAlignment="Center"></Label>
+        <Label Classes="h2" Content="Войдите в систему" HorizontalAlignment="Center"></Label>
+        <TextBox Classes="Main" PlaceholderText="Логин" Text="{Binding Login}"></TextBox>
+        <TextBox Classes="Main" PlaceholderText="Пароль" PasswordChar="*" Text="{Binding Password}"></TextBox>
+        <TextBlock IsVisible="{Binding ErrorMessage, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" Text="{Binding ErrorMessage}" HorizontalAlignment="Center" Foreground="Red"></TextBlock>
+        <Button  Width="300" HorizontalAlignment="Center" Classes="Main" Content="Войти" 
+                Background="{StaticResource BlueColor}" Command="{Binding LoginCommand}"></Button>
+        <Button Width="300" HorizontalAlignment="Center" Classes="Main" Content="Регистрация" 
+                Background="{StaticResource RedColor}" Command="{Binding GoToRegisterCommand}"></Button>
+    </StackPanel>
+</UserControl>

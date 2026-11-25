@@ -1,0 +1,33 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="clr-namespace:Library.Client.ViewModels"
+             x:DataType="vm:AddBookViewModel"
+             x:Class="Library.Client.Views.AddBookPage">
+
+    <ScrollViewer>
+        <StackPanel Spacing="12" Width="400" HorizontalAlignment="Center" Margin="0,24">
+            <Label Content="Новая книга" Classes="h1" HorizontalAlignment="Center"/>
+
+            <TextBox Classes="Main" PlaceholderText="ISBN"  Text="{Binding Isbn}" />
+            <TextBox Classes="Main" PlaceholderText="Название книги" Text="{Binding Title}" />
+            <TextBox Classes="Main" PlaceholderText="Имя автора" Text="{Binding AuthorFirstName}" />
+            <TextBox Classes="Main" PlaceholderText="Фамилия автора" Text="{Binding AuthorLastName}" />
+            <TextBox Classes="Main" PlaceholderText="Жанр" Text="{Binding Genre}" />
+            
+            <NumericUpDown Classes="Main" Value="{Binding Year}" Minimum="1500" Maximum="3000" FormatString="0" PlaceholderText="Год издания" />
+            <NumericUpDown Classes="Main" Value="{Binding Count}" Minimum="1" Maximum="1000" FormatString="0" PlaceholderText="Количество экземпляров" />
+
+            <TextBlock Text="{Binding ErrorMessage}" Foreground="Red" 
+                       IsVisible="{Binding ErrorMessage, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" />
+
+            <StackPanel Orientation="Vertical" Spacing="12" HorizontalAlignment="Center">
+                
+                <Button Content="Сохранить" Command="{Binding SaveBookCommand}" 
+                        Background="{StaticResource BlueBrush}" Classes="Main"/>
+                <Button Content="Отмена" Command="{Binding CancelCommand}" Classes="Main"/>
+            </StackPanel>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

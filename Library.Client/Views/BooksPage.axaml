@@ -1,0 +1,64 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="clr-namespace:Library.Client.ViewModels"
+             x:DataType="vm:BooksViewModel"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="Library.Client.Views.BooksPage">
+<StackPanel Orientation="Vertical">
+    <StackPanel Orientation="Horizontal" Height="50">
+        <Button Classes="Main" Background="{StaticResource GreenColor}">Взять</Button>
+        <Button Classes="Main" Background="{StaticResource RedColor}">Положить</Button>
+        <Button Classes="Main" Background="{StaticResource BlueColor}" Command="{Binding OpenBookCardCommand}">Карточка</Button>
+        <Button Content="Добавить книгу" 
+                IsVisible="{Binding IsAdmin}"
+                Command="{Binding OpenAddBookCommand}"
+                Background="{StaticResource BlueBrush}"
+                Classes="Main" />
+    </StackPanel>
+    
+    
+    <DataGrid ItemsSource="{Binding Books}" SelectedItem="{Binding SelectedBook}"
+              AutoGenerateColumns="False" 
+              IsReadOnly="True"
+              GridLinesVisibility="All"
+              BorderThickness="1"
+              BorderBrush="Gray">
+        <DataGrid.Columns>
+            <DataGridTextColumn Header="ISBN" Binding="{Binding Isbn}" Width="200" />
+            <DataGridTextColumn Header="Название" Binding="{Binding Title}" Width="*" />
+            <DataGridTextColumn Header="Автор" Binding="{Binding Author}" Width="300" />
+            <DataGridTextColumn Header="Жанр" Binding="{Binding Genre}" Width="150" />
+            <DataGridTextColumn Header="Рейтинг" Binding="{Binding Rating, StringFormat='{}{0:F1}/5.0'}" Width="150" />
+            <DataGridTextColumn Header="Год издания" Binding="{Binding Year}" Width="150" />
+            <DataGridTextColumn Header="Количество" Binding="{Binding Count}" Width="150" />
+            
+        </DataGrid.Columns>
+    </DataGrid>
+    
+    
+    <StackPanel Orientation="Horizontal" Spacing="10" Margin="10,5" VerticalAlignment="Center">
+        <TextBox Text="{Binding SearchTb}" 
+                 PlaceholderText="Поиск по названию, автору или ISBN..." 
+                 Classes="Main" />
+             
+        <ComboBox ItemsSource="{Binding AuthorFilter}" 
+                  SelectedItem="{Binding SelectedAuthor}" 
+                  Classes="Main" />
+              
+        <ComboBox ItemsSource="{Binding GenreFilter}" 
+                  SelectedItem="{Binding SelectedGenre}" 
+                  Classes="Main" />
+              
+        <Button Content="Сбросить" 
+                Command="{Binding ResetFiltersCommand}" 
+                Classes="Main" 
+                Background="{StaticResource RedColor}"/>
+    </StackPanel>
+
+    
+    
+</StackPanel>
+</UserControl>
+

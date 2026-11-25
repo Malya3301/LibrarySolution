@@ -1,0 +1,76 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="clr-namespace:Library.Client.ViewModels"
+             xmlns:dto="clr-namespace:Library.Data.DTOs;assembly=Library.Data"
+             x:DataType="vm:BookCardViewModel"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="Library.Client.Views.BookCardPage">
+    <ScrollViewer>
+        <StackPanel Spacing="16" Margin="24">
+            
+            <Button Content="← Назад" Command="{Binding GoBackCommand}" />
+
+            <StackPanel Orientation="Horizontal" Spacing="12">
+                <TextBlock Text="{Binding Book.Title}" FontSize="28" FontWeight="Bold" />
+                <TextBlock Text="{Binding Book.Rating, StringFormat='★ {0:F1}/5.0'}" 
+                           FontSize="22" FontWeight="SemiBold" Foreground="#35A7FF" VerticalAlignment="Center" />
+            </StackPanel>
+            
+            <TextBlock Text="{Binding Book.Author}" FontSize="18" Foreground="#5A6A85" />
+
+            <TextBlock Text="Отзывы" FontSize="20" FontWeight="Bold" Margin="0,12,0,0" />
+            
+            <Border Background="#F0F8FF" BorderBrush="#D6ECFF" BorderThickness="1" CornerRadius="12" Padding="16" Margin="0,8,0,0">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Оставить отзыв" FontSize="16" FontWeight="SemiBold" Foreground="#0A3D7A" />
+                    
+                    <StackPanel Orientation="Horizontal" Spacing="10" VerticalAlignment="Center">
+                        <TextBlock Text="Ваша оценка:" VerticalAlignment="Center" Foreground="#2C3E50" />
+                        <ComboBox ItemsSource="{Binding RatingOptions}" SelectedItem="{Binding SelectedRating}" Width="80" />
+                    </StackPanel>
+
+                    <TextBox PlaceholderText="Текст отзыва" 
+                             Text="{Binding NewComment}" 
+                             AcceptsReturn="True" 
+                             TextWrapping="Wrap" 
+                             Height="80" />
+
+                    <TextBlock Text="{Binding FeedbackError}" Foreground="Red" 
+                               IsVisible="{Binding FeedbackError, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" />
+
+                    <Button Content="Отправить отзыв" 
+                            Command="{Binding SendFeedbackCommand}" 
+                            Background="{StaticResource BlueBrush}" 
+                            Classes="Main"
+                            Width="400"
+                            />
+                </StackPanel>
+            </Border>
+            
+            <ItemsControl ItemsSource="{Binding Book.Feedbacks}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel Spacing="10" />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate x:DataType="dto:FeedbackDto">
+                        <Border Background="#F5FAFF" BorderBrush="#D6ECFF" BorderThickness="1" CornerRadius="12" Padding="16">
+                            <StackPanel Spacing="6">
+                                <Grid ColumnDefinitions="*, Auto">
+                                    <TextBlock Grid.Column="0" Text="{Binding Author}" FontWeight="SemiBold" Foreground="#0A3D7A" />
+                                    <TextBlock Grid.Column="1" Text="{Binding Rating, StringFormat='★ {0}/5'}" FontWeight="Bold" Foreground="#35A7FF" />
+                                </Grid>
+                                <TextBlock Text="{Binding Content}" TextWrapping="Wrap" Foreground="#2C3E50" />
+                            </StackPanel>
+                        </Border>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>
